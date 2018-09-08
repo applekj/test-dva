@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Table, Popconfirm, Button } from 'antd';
 import withHeader from './common/publicHeader';
 
