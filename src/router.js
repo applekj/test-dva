@@ -31,7 +31,6 @@ class SiderDemo extends Component {
     }
 
     render() {
-        console.log(this.props)
         return (
             <Layout>
                 <Sider
