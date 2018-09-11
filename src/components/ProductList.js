@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Table, Popconfirm, Button } from 'antd';
+import { Table, Popconfirm, Button, Select, Form } from 'antd';
 import withHeader from './common/publicHeader';
+const Option = Select.Option;
+const FormItem = Form.Item;
 
 // const ProductList = ({ onDelete, products }) => {
 //     const columns = [
@@ -31,6 +33,7 @@ import withHeader from './common/publicHeader';
 
 // export default ProductList;
 
+@Form.create()
 @withHeader
 export default class ProductList extends Component {
     columns = [
@@ -50,14 +53,44 @@ export default class ProductList extends Component {
         }
     ];
 
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps, 'hello')
+    }
+
     render() {
-        console.log(this.props,'result')
+        console.log(this.props, 'result')
+        const { getFieldDecorator } = this.props.form;
         return (
-            <Table
-                rowKey={record => record.name}
-                columns={this.columns}
-                dataSource={this.props.products}
-            />
+            <Form layout="inline" onSubmit={this.handleSubmit}>
+                <FormItem
+                    label='表格数据:'
+                >
+                    {getFieldDecorator('tableData', {
+                        rules: [{ required: false, message: 'Please input your username!' }],
+                    })(
+                        <Table
+                            rowKey={record => record.name}
+                            columns={this.columns}
+                            dataSource={this.props.products}
+                        />
+                    )}
+                </FormItem>
+                <FormItem
+                    label='选择框:'
+                >
+                    {getFieldDecorator('userName', {
+                        rules: [{ required: true, message: 'Please input your username!' }],
+                        initialValue: 'lucy'
+                    })(
+                        <Select style={{ width: 120 }} onChange={value => { console.log(value) }}>
+                            <Option value="jack">Jack</Option>
+                            <Option value="lucy">Lucy</Option>
+                            <Option value="disabled" disabled>Disabled</Option>
+                            <Option value="Yiminghe">yiminghe</Option>
+                        </Select>
+                    )}
+                </FormItem>
+            </Form >
         )
     }
 }
